@@ -1,0 +1,21 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Pull dernier code
+        run: |
+          cd ~/projet
+          git pull origin main
+
+      - name: Build & restart containers
+        run: |
+          cd ~/projet
+          docker compose down
+          docker compose up -d --build
